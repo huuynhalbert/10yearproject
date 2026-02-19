@@ -240,7 +240,7 @@
       transform: translateY(0);
     }
 
-    /* Flowers that stay with the letter - emoji flowers */
+    /* Flowers that stay with the letter - images from flowers/ folder */
     .letter-flowers {
       position: absolute;
       top: 0;
@@ -252,12 +252,18 @@
     }
     .letter-flower {
       position: absolute;
-      font-size: 1.75rem;
-      line-height: 1;
+      width: 36px;
+      height: 36px;
       opacity: 0;
       transition: opacity 0.5s ease 0.4s;
       animation: flower-float 3s ease-in-out infinite;
-      filter: drop-shadow(0 1px 2px rgba(0,0,0,0.1));
+      filter: drop-shadow(0 1px 3px rgba(0,0,0,0.12));
+    }
+    .letter-flower img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
     }
     .envelope-wrapper.opened .letter .letter-flower {
       opacity: 1;
@@ -487,27 +493,38 @@
       width: 100%;
       height: 100%;
       pointer-events: none;
-      z-index: 1000;
-      overflow: hidden;
+      z-index: 9999;
+      overflow: visible;
+      isolation: isolate;
     }
     .confetti-piece {
       position: absolute;
       opacity: 1;
       will-change: transform, opacity;
-      z-index: 1001;
     }
     .confetti-piece.confetti-paper {
-      width: 8px;
-      height: 8px;
-      border: 1px solid var(--outline);
+      width: 14px;
+      height: 14px;
+      border-radius: 2px;
     }
     .confetti-piece.confetti-heart {
-      font-size: 1.1rem;
+      font-size: 1.75rem;
       line-height: 1;
     }
     .confetti-piece.confetti-flower {
-      font-size: 1.25rem;
+      font-size: 1.85rem;
       line-height: 1;
+    }
+    .confetti-piece.confetti-pixel {
+      width: 36px;
+      height: 36px;
+      display: inline-block;
+    }
+    .confetti-piece.confetti-pixel img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
     }
 
     /* iPhone / narrow layout - pixel */
@@ -552,7 +569,7 @@
       footer { font-size: 0.4rem; margin-top: 1.25rem; }
     }
 
-    /* Photo ring around letter - visible when envelope open, tilt phone to look around */
+    /* Moving carousel - visible when envelope open, scrolls left to right */
     .memories-wrap {
       position: fixed;
       top: 0;
@@ -569,41 +586,69 @@
       opacity: 1;
       visibility: visible;
     }
-    .memories-center {
+    .carousel-viewport {
       position: absolute;
-      top: 50%;
       left: 50%;
-      width: 1px;
-      height: 1px;
-      margin: -1px 0 0 -1px;
-      perspective: 1000px;
-    }
-    .photo-ring-3d {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 0;
-      height: 0;
-      transform-style: preserve-3d;
-      transition: transform 0.15s ease-out;
-    }
-    .photo-item {
-      position: absolute;
-      width: 72px;
-      height: 72px;
-      margin: -36px 0 0 -36px;
-      border-radius: 8px;
+      top: 48%;
+      transform: translate(-50%, -50%);
+      width: 100%;
+      max-width: 100%;
+      height: 96px;
       overflow: hidden;
+    }
+    .carousel-track {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 16px;
+      height: 100%;
+      width: max-content;
+      animation: carousel-scroll 50s linear infinite;
+      will-change: transform;
+    }
+    body.envelope-open .memories-wrap .carousel-track {
+      animation-play-state: running;
+    }
+    @keyframes carousel-scroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(calc(-100% / 3)); }
+    }
+    .carousel-item {
+      position: relative;
+      flex-shrink: 0;
+      width: 80px;
+      height: 80px;
+      border-radius: 10px;
+      overflow: visible;
       border: 3px solid var(--outline);
       box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-      backface-visibility: hidden;
     }
-    .photo-item img {
+    .carousel-item img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       display: block;
+      border-radius: 7px;
     }
+    .carousel-item .pixel-pet {
+      position: absolute;
+      width: 26px;
+      height: 26px;
+      z-index: 2;
+      overflow: hidden;
+    }
+    .carousel-item .pixel-pet img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+      image-rendering: pixelated;
+      image-rendering: crisp-edges;
+    }
+    .carousel-item .pixel-pet.corner-tl { top: -5px; left: -5px; }
+    .carousel-item .pixel-pet.corner-tr { top: -5px; right: -5px; left: auto; }
+    .carousel-item .pixel-pet.corner-bl { bottom: -5px; left: -5px; top: auto; }
+    .carousel-item .pixel-pet.corner-br { bottom: -5px; right: -5px; left: auto; top: auto; }
   </style>
 </head>
 <body>
@@ -624,12 +669,12 @@
         <div class="envelope-flap"></div>
         <div class="letter">
           <div class="letter-flowers" aria-hidden="true">
-            <span class="letter-flower">🌸</span>
-            <span class="letter-flower">🌷</span>
-            <span class="letter-flower">🌹</span>
-            <span class="letter-flower">💐</span>
-            <span class="letter-flower">🌺</span>
-            <span class="letter-flower">🌻</span>
+            <span class="letter-flower"><img src="flowers/iq8u65d6nvev1415rb3j0sbfeu-f8507cc2a651bc1bfefaa8af8968a3b0.png" alt=""></span>
+            <span class="letter-flower"><img src="flowers/ac7ladmi02vths0bsgf9510nk8-fb150c79a8a0374595b91b265a1f874c.png" alt=""></span>
+            <span class="letter-flower"><img src="flowers/ac7ladmi02vths0bsgf9510nk8-fb150c79a8a0374595b91b265a1f874c.png" alt=""></span>
+            <span class="letter-flower"><img src="flowers/580sql68pvv9kiufngd7igm1vj.png" alt=""></span>
+            <span class="letter-flower"><img src="flowers/580sql68pvv9kiufngd7igm1vj.png" alt=""></span>
+            <span class="letter-flower"><img src="flowers/iq8u65d6nvev1415rb3j0sbfeu-f8507cc2a651bc1bfefaa8af8968a3b0.png" alt=""></span>
           </div>
           <p class="heart-line">❤️ 10 years of us ❤️</p>
           <p>
@@ -680,8 +725,8 @@
   <div id="confetti-container" aria-hidden="true"></div>
 
   <div class="memories-wrap" id="memories-wrap" aria-hidden="true">
-    <div class="memories-center">
-      <div class="photo-ring-3d" id="photo-ring-3d"></div>
+    <div class="carousel-viewport">
+      <div class="carousel-track" id="carousel-track"></div>
     </div>
   </div>
 
@@ -692,29 +737,27 @@
     const penguins = document.querySelectorAll('.penguin');
     const footer = document.getElementById('footer');
     const confettiContainer = document.getElementById('confetti-container');
-    const photoRing3d = document.getElementById('photo-ring-3d');
+    const carouselTrack = document.getElementById('carousel-track');
 
-    // Add your image paths here – put photos in the images/ folder (same or different for each)
+    // Your 6 images – put photos in the images/ folder
     const MEMORY_IMAGES = [
       'images/IMG_0016.png',
-      'images/IMG_0016.png',
-      'images/IMG_0016.png',
-      'images/IMG_0016.png',
-      'images/IMG_0016.png',
-      'images/IMG_0016.png',
-      'images/IMG_0016.png',
-      'images/IMG_0016.png'
+      'images/IMG_0193.png',
+      'images/IMG_0635.png',
+      'images/IMG_1487.png',
+      'images/IMG_6234.png',
+      'images/IMG_6569.png'
     ];
-    const PHOTO_RING_RADIUS = 140;
-    const PHOTO_SIZE = 72;
 
     const HEARTS = ['❤️', '💕', '💗', '💖', '✨', '🐧'];
     const FLOWERS = ['🌸', '🌷', '🌹', '💐', '🌺', '🌻', '🪷', '💮'];
+    const PIXEL_IMAGES = ['pixel/bunny.png', 'pixel/clefairy.png', 'pixel/doggy.png', 'pixel/helloykitty.png', 'pixel/jigglypuffpixel.png', 'pixel/kirbypixel.png', 'pixel/pandapixel.png', 'pixel/ramen.png', 'pixel/sealpixel.png'];
     const CONFETTI_COLORS = ['#f4c2c2', '#e8a0a0', '#ffb6c1', '#ffd700', '#fff5ee', '#ffe4e1', '#dda0dd', '#98fb98'];
-    const PAPER_COUNT = 42;
-    const HEART_COUNT = 18;
-    const FLOWER_COUNT = 20;
-    const DURATION_MS = 2800;
+    const PAPER_COUNT = 50;
+    const HEART_COUNT = 20;
+    const FLOWER_COUNT = 22;
+    const PIXEL_COUNT = 14;
+    const DURATION_MS = 28000;
 
     // ---- Page load: staggered entrance ----
     function runEntranceAnimations() {
@@ -734,61 +777,75 @@
       runEntranceAnimations();
     }
 
-    // ---- Confetti burst: paper + hearts + flowers (JS-driven) ----
+    // ---- Confetti burst: slower, smoother, stays visible longer ----
     function burstConfetti(originX, originY) {
+      if (!confettiContainer) return;
       confettiContainer.innerHTML = '';
-      const start = performance.now();
-      const gravity = 0.0004;
-      const pieces = [];
+      confettiContainer.style.display = 'block';
+      var start = performance.now();
+      var gravity = 0.00014;
+      var pieces = [];
 
       function addPiece(type) {
-        const el = document.createElement('span');
+        var el = document.createElement('span');
         if (type === 'paper') {
           el.className = 'confetti-piece confetti-paper';
           el.style.background = CONFETTI_COLORS[Math.floor(Math.random() * CONFETTI_COLORS.length)];
         } else if (type === 'heart') {
           el.className = 'confetti-piece confetti-heart';
           el.textContent = HEARTS[Math.floor(Math.random() * HEARTS.length)];
+        } else if (type === 'pixel') {
+          el.className = 'confetti-piece confetti-pixel';
+          var img = document.createElement('img');
+          img.src = PIXEL_IMAGES[Math.floor(Math.random() * PIXEL_IMAGES.length)];
+          img.alt = '';
+          el.appendChild(img);
         } else {
           el.className = 'confetti-piece confetti-flower';
           el.textContent = FLOWERS[Math.floor(Math.random() * FLOWERS.length)];
         }
-        const angle = Math.random() * Math.PI * 2;
-        const speed = 90 + Math.random() * 110;
-        const data = {
+        var angle = Math.random() * Math.PI * 2;
+        var speed = 18 + Math.random() * 18;
+        var data = {
           vx: Math.cos(angle) * speed,
-          vy: -100 - Math.random() * 80,
+          vy: -4 - Math.random() * 16,
           rot0: Math.random() * 360,
-          rotSpeed: (Math.random() - 0.5) * 0.4,
-          wobble: (Math.random() - 0.5) * 2,
+          rotSpeed: (Math.random() - 0.5) * 0.05,
+          wobble: (Math.random() - 0.5) * 0.6,
           seed: Math.random() * 10
         };
         el.style.left = originX + 'px';
         el.style.top = originY + 'px';
+        el.style.transform = 'translate(-50%, -50%)';
         confettiContainer.appendChild(el);
-        pieces.push({ el, data });
+        pieces.push({ el: el, data: data });
       }
 
-      for (let i = 0; i < PAPER_COUNT; i++) addPiece('paper');
-      for (let i = 0; i < HEART_COUNT; i++) addPiece('heart');
-      for (let i = 0; i < FLOWER_COUNT; i++) addPiece('flower');
+      for (var i = 0; i < PAPER_COUNT; i++) addPiece('paper');
+      for (var i = 0; i < HEART_COUNT; i++) addPiece('heart');
+      for (var i = 0; i < FLOWER_COUNT; i++) addPiece('flower');
+      for (var i = 0; i < PIXEL_COUNT; i++) addPiece('pixel');
 
+      var RAMP_MS = 5500;
       function tick(now) {
-        const elapsed = now - start;
-        const t = Math.min(elapsed / DURATION_MS, 1);
+        var elapsed = now - start;
+        var t = Math.min(elapsed / DURATION_MS, 1);
+        var effectiveElapsed = elapsed < RAMP_MS ? (elapsed * elapsed / RAMP_MS) : (elapsed - RAMP_MS * 0.5);
 
-        pieces.forEach(({ el, data: d }, i) => {
-          const x = d.vx * elapsed * 0.2 + d.wobble * Math.sin(elapsed * 0.006 + d.seed) * 18;
-          const y = d.vy * elapsed * 0.18 + 0.5 * gravity * elapsed * elapsed;
-          const rot = d.rot0 + elapsed * d.rotSpeed;
-          const opacity = t > 0.82 ? (1 - t) / 0.18 : 1;
-          const scale = 0.9 + 0.25 * Math.sin(elapsed * 0.003 + d.seed);
-          el.style.transform = `translate(${x}px, ${y}px) rotate(${rot}deg) scale(${scale})`;
-          el.style.opacity = String(opacity);
-        });
+        for (var i = 0; i < pieces.length; i++) {
+          var p = pieces[i];
+          var d = p.data;
+          var x = d.vx * effectiveElapsed * 0.038 + d.wobble * Math.sin(elapsed * 0.001 + d.seed) * 8;
+          var y = d.vy * effectiveElapsed * 0.028 + 0.5 * gravity * elapsed * elapsed;
+          var rot = d.rot0 + elapsed * d.rotSpeed;
+          var opacity = t > 0.92 ? (1 - t) / 0.08 : 1;
+          var scale = 0.97 + 0.12 * Math.sin(elapsed * 0.001 + d.seed);
+          p.el.style.transform = 'translate(calc(-50% + ' + x + 'px), calc(-50% + ' + y + 'px)) rotate(' + rot + 'deg) scale(' + scale + ')';
+          p.el.style.opacity = String(opacity);
+        }
 
         if (t < 1) requestAnimationFrame(tick);
-        else confettiContainer.innerHTML = '';
+        else { confettiContainer.innerHTML = ''; confettiContainer.style.display = ''; }
       }
       requestAnimationFrame(tick);
     }
@@ -813,78 +870,38 @@
       });
     }
 
-    // ---- Photo ring: build once, tilt to look around ----
-    function buildPhotoRing() {
-      if (!photoRing3d || photoRing3d.children.length > 0) return;
-      const n = MEMORY_IMAGES.length;
-      MEMORY_IMAGES.forEach((src, i) => {
-        const deg = (i / n) * 360;
-        const div = document.createElement('div');
-        div.className = 'photo-item';
-        div.style.transform = 'rotateY(' + (deg + 180) + 'deg) translateZ(' + PHOTO_RING_RADIUS + 'px)';
-        const img = document.createElement('img');
+    // Pixel images (shared with confetti) – from pixel/ folder
+    var PIXEL_CORNERS = ['corner-tl', 'corner-tr', 'corner-bl', 'corner-br'];
+    // ---- Carousel: build with 3 copies for seamless infinite loop (no visible end) ----
+    function buildCarousel() {
+      if (!carouselTrack || carouselTrack.children.length > 0) return;
+      var pixelIndex = 0;
+      function addItem(src, index) {
+        var div = document.createElement('div');
+        div.className = 'carousel-item';
+        var img = document.createElement('img');
         img.src = src;
-        img.alt = 'Memory ' + (i + 1);
+        img.alt = 'Memory ' + (index + 1);
         img.loading = 'lazy';
         img.onerror = function () { this.style.background = 'var(--pink)'; this.style.minHeight = '100%'; };
         div.appendChild(img);
-        photoRing3d.appendChild(div);
-      });
-    }
-
-    var orientationGamma = 0;
-    var orientationBeta = 0;
-    var useMouse = false;
-
-    function applyRingTransform() {
-      var rotY = -orientationGamma * 0.5;
-      var rotX = orientationBeta * 0.4;
-      if (photoRing3d) photoRing3d.style.transform = 'rotateY(' + rotY + 'deg) rotateX(' + rotX + 'deg)';
-    }
-
-    function onOrientation(e) {
-      if (e.gamma != null) orientationGamma = e.gamma;
-      if (e.beta != null) orientationBeta = e.beta;
-      useMouse = false;
-      applyRingTransform();
-    }
-
-    function onMouseMove(e) {
-      if (!useMouse || !document.body.classList.contains('envelope-open')) return;
-      var w = window.innerWidth;
-      var h = window.innerHeight;
-      orientationGamma = (e.clientX / w - 0.5) * 60;
-      orientationBeta = (e.clientY / h - 0.5) * 60;
-      applyRingTransform();
-    }
-
-    function startDeviceOrientation() {
-      useMouse = true;
-      orientationGamma = 0;
-      orientationBeta = 0;
-      window.addEventListener('mousemove', onMouseMove);
-      if (typeof DeviceOrientationEvent === 'undefined') return;
-      if (DeviceOrientationEvent.requestPermission) {
-        DeviceOrientationEvent.requestPermission()
-          .then(function (permission) {
-            if (permission === 'granted') {
-              useMouse = false;
-              window.addEventListener('deviceorientation', onOrientation);
-            }
-          })
-          .catch(function () {});
-        return;
+        var pet = document.createElement('span');
+        var whichPixel = PIXEL_IMAGES[pixelIndex % PIXEL_IMAGES.length];
+        var whichCorner = PIXEL_CORNERS[Math.floor(Math.random() * PIXEL_CORNERS.length)];
+        pet.className = 'pixel-pet ' + whichCorner;
+        pet.setAttribute('aria-hidden', 'true');
+        var petImg = document.createElement('img');
+        petImg.src = whichPixel;
+        petImg.alt = '';
+        petImg.loading = 'lazy';
+        pet.appendChild(petImg);
+        div.appendChild(pet);
+        pixelIndex++;
+        carouselTrack.appendChild(div);
       }
-      window.addEventListener('deviceorientation', onOrientation);
-      useMouse = false;
-    }
-
-    function stopDeviceOrientation() {
-      window.removeEventListener('deviceorientation', onOrientation);
-      window.removeEventListener('mousemove', onMouseMove);
-      orientationGamma = 0;
-      orientationBeta = 0;
-      if (photoRing3d) photoRing3d.style.transform = '';
+      for (var c = 0; c < 3; c++) {
+        MEMORY_IMAGES.forEach(addItem);
+      }
     }
 
     function openEnvelope() {
@@ -893,13 +910,13 @@
       envelope.setAttribute('aria-label', 'Envelope opened');
       document.body.classList.add('envelope-open');
 
-      buildPhotoRing();
-      startDeviceOrientation();
+      buildCarousel();
 
-      const rect = envelope.getBoundingClientRect();
-      const originX = rect.left + rect.width / 2;
-      const originY = rect.top + rect.height / 2;
-      burstConfetti(originX, originY);
+      var originX = window.innerWidth * 0.5;
+      var originY = window.innerHeight * 0.45;
+      requestAnimationFrame(function () {
+        burstConfetti(originX, originY);
+      });
       celebratePenguins();
       setTimeout(revealLetterLines, 600);
     }
@@ -909,7 +926,6 @@
       envelope.classList.remove('opened');
       envelope.setAttribute('aria-label', 'Open envelope');
       document.body.classList.remove('envelope-open');
-      stopDeviceOrientation();
       letterLines.forEach((line) => {
         line.classList.remove('reveal-line', 'visible');
       });
