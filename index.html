@@ -542,23 +542,31 @@
       display: block;
     }
 
-    /* Phone / narrow layout - letter fits viewport, starts at top */
+    /* Phone / narrow layout - letter above carousel, full width, no overflow */
     @media (max-width: 480px) {
       body { padding: 0.75rem; }
       h1 { font-size: 0.6rem; margin-bottom: 1.25rem; }
       .scene { gap: 1.5rem; margin-top: 6rem; }
       .envelope-wrapper.opened .letter {
         position: fixed;
-        top: max(2.5rem, calc(env(safe-area-inset-top, 0px) + 1.5rem));
-        left: max(0.75rem, env(safe-area-inset-left, 0px));
-        right: max(0.75rem, env(safe-area-inset-right, 0px));
+        top: max(0.5rem, env(safe-area-inset-top, 0px));
+        left: max(0.5rem, env(safe-area-inset-left, 0px));
+        right: max(0.5rem, env(safe-area-inset-right, 0px));
         transform: none;
         width: auto;
         max-width: none;
-        max-height: calc(100dvh - 1.5rem - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px));
+        max-height: calc(100dvh - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px) - 6rem - 100px);
         min-height: 200px;
         overflow-x: hidden;
+        overflow-y: auto;
         box-sizing: border-box;
+        z-index: 510;
+      }
+      body.envelope-open .memories-wrap { z-index: 500; }
+      body.envelope-open .carousel-viewport {
+        top: auto;
+        bottom: max(0.5rem, env(safe-area-inset-bottom, 0px));
+        transform: translate(-50%, 0);
       }
       .envelope { width: 260px; height: 168px; }
       .envelope-flap {
@@ -573,11 +581,8 @@
       }
       .letter {
         min-height: 140px;
-        padding: 1rem 0.9rem;
+        padding: 0.85rem 0.75rem;
         box-sizing: border-box;
-      }
-      .envelope-wrapper.opened .letter {
-        width: auto;
       }
       .letter p { font-size: 0.42rem; line-height: 1.8; }
       .letter .heart-line { font-size: 0.38rem; }
@@ -620,6 +625,85 @@
       opacity: 1;
       visibility: visible;
     }
+
+    /* Music player - inside the letter, top-right corner */
+    .letter .music-player {
+      position: absolute;
+      top: 0.5rem;
+      right: 0.5rem;
+      z-index: 5;
+      display: flex;
+      align-items: center;
+      padding: 0.25rem;
+      background: var(--paper);
+      border: 3px solid var(--outline);
+      box-shadow: 3px 3px 0 var(--outline);
+    }
+    .music-player-btn {
+      width: 28px;
+      height: 28px;
+      padding: 0;
+      border: 3px solid var(--outline);
+      background: var(--pink);
+      color: var(--text);
+      font-size: 0.5rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .music-player-btn:hover { background: var(--pink-dark); }
+    .music-player-btn:focus { outline: 2px solid var(--outline); outline-offset: 2px; }
+
+    /* Music box - visible before opening envelope, play song first */
+    .music-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 1rem 1.25rem;
+      background: linear-gradient(180deg, var(--paper) 0%, #f5ebe0 100%);
+      border: 3px solid var(--outline);
+      box-shadow: 5px 5px 0 var(--outline), inset 0 1px 0 rgba(255,255,255,0.5);
+      font-family: 'Press Start 2P', cursive;
+      margin-bottom: 0.5rem;
+    }
+    .music-box-lid {
+      width: 100%;
+      height: 4px;
+      background: var(--envelope-dark);
+      border: 2px solid var(--outline);
+      margin-bottom: 0.25rem;
+      border-radius: 1px;
+    }
+    .music-box-label {
+      font-size: 0.35rem;
+      color: var(--pink-dark);
+      text-align: center;
+    }
+    .music-box-btn {
+      width: 48px;
+      height: 48px;
+      padding: 0;
+      border: 3px solid var(--outline);
+      background: var(--pink);
+      color: var(--text);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+      box-shadow: 3px 3px 0 var(--outline);
+      -webkit-tap-highlight-color: transparent;
+      transition: transform 0.15s ease;
+    }
+    .music-box-btn:hover { background: var(--pink-dark); transform: scale(1.05); }
+    .music-box-btn:active { transform: scale(0.98); }
+    .music-box-btn:focus { outline: 2px solid var(--outline); outline-offset: 2px; }
+
     .carousel-viewport {
       position: absolute;
       left: 50%;
@@ -697,11 +781,22 @@
   <h1>10 Years Together 💕</h1>
 
   <div class="scene">
+    <div class="music-box" aria-label="Music box – play our song">
+      <div class="music-box-lid" aria-hidden="true"></div>
+      <span class="music-box-label">Play Song First</span>
+      <button type="button" class="music-box-btn" id="music-box-play-btn" aria-label="Play music">▶</button>
+    </div>
     <div class="envelope-wrapper" id="envelope" role="button" tabindex="0" aria-label="Open envelope">
       <div class="envelope">
         <div class="envelope-inner"></div>
         <div class="envelope-flap"></div>
         <div class="letter">
+          <div class="music-player" id="music-player" aria-label="Background music">
+            <audio id="letter-music" preload="metadata" loop>
+              <source src="Justin%20Bieber%20-%20Lifetime.mp3" type="audio/mpeg">
+            </audio>
+            <button type="button" class="music-player-btn" id="music-play-btn" aria-label="Play music">▶</button>
+          </div>
           <div class="letter-flowers" aria-hidden="true">
             <span class="letter-flower"><img src="flowers/iq8u65d6nvev1415rb3j0sbfeu-f8507cc2a651bc1bfefaa8af8968a3b0.png" alt=""></span>
             <span class="letter-flower"><img src="flowers/ac7ladmi02vths0bsgf9510nk8-fb150c79a8a0374595b91b265a1f874c.png" alt=""></span>
@@ -970,6 +1065,8 @@
       letterLines.forEach((line) => {
         line.classList.remove('reveal-line', 'visible');
       });
+      var letterMusic = document.getElementById('letter-music');
+      if (letterMusic) letterMusic.pause();
     }
 
     var lastToggleTime = 0;
@@ -986,6 +1083,33 @@
       e.preventDefault();
       toggleEnvelope(e);
     }, { passive: false });
+    var letterMusic = document.getElementById('letter-music');
+    if (letterMusic) letterMusic.volume = 0.2;
+    var musicPlayBtn = document.getElementById('music-play-btn');
+    var musicBoxPlayBtn = document.getElementById('music-box-play-btn');
+    function setPlayButtonState(playing) {
+      var label = playing ? 'Pause music' : 'Play music';
+      var icon = playing ? '❚❚' : '▶';
+      if (musicPlayBtn) { musicPlayBtn.textContent = icon; musicPlayBtn.setAttribute('aria-label', label); }
+      if (musicBoxPlayBtn) { musicBoxPlayBtn.textContent = icon; musicBoxPlayBtn.setAttribute('aria-label', label); }
+    }
+    function toggleMusic() {
+      if (!letterMusic) return;
+      if (letterMusic.paused) letterMusic.play();
+      else letterMusic.pause();
+    }
+    if (letterMusic) {
+      letterMusic.addEventListener('ended', function () { setPlayButtonState(false); });
+      letterMusic.addEventListener('pause', function () { setPlayButtonState(false); });
+      letterMusic.addEventListener('play', function () { setPlayButtonState(true); });
+    }
+    if (musicBoxPlayBtn && letterMusic) {
+      musicBoxPlayBtn.addEventListener('click', function (e) { e.stopPropagation(); toggleMusic(); });
+    }
+    if (musicPlayBtn && letterMusic) {
+      musicPlayBtn.addEventListener('click', function (e) { e.stopPropagation(); toggleMusic(); });
+    }
+
     envelope.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
