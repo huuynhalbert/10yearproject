@@ -26,6 +26,8 @@
       --text: #3d2c2e;
       --outline: #2d1b2e;
       --pixel-size: 4px;
+      --stem-green: #5a9e5a;
+      --stem-dark: #3d7a3d;
     }
 
     html {
@@ -34,9 +36,18 @@
     }
 
     body {
+      width: 100%;
+      min-width: 320px;
+      max-width: 390px;
       min-height: 100vh;
-      min-height: calc(100vh + env(safe-area-inset-bottom));
+      min-height: 100dvh;
       min-height: -webkit-fill-available;
+      margin: 0 auto;
+      padding: 1rem;
+      padding-left: max(1rem, env(safe-area-inset-left));
+      padding-right: max(1rem, env(safe-area-inset-right));
+      padding-top: max(1rem, env(safe-area-inset-top));
+      padding-bottom: max(1.5rem, env(safe-area-inset-bottom));
       background: #e8dce8;
       background-image:
         linear-gradient(rgba(0,0,0,.03) 1px, transparent 1px),
@@ -49,14 +60,7 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 1rem;
-      padding-left: max(1rem, env(safe-area-inset-left));
-      padding-right: max(1rem, env(safe-area-inset-right));
-      padding-top: max(1rem, env(safe-area-inset-top));
-      padding-bottom: max(1.5rem, env(safe-area-inset-bottom));
       position: relative;
-      margin: 0 auto;
-      max-width: 390px;
     }
 
     /* Pixel sparkles */
@@ -104,9 +108,12 @@
 
     .scene {
       position: relative;
+      width: 100%;
+      margin-top: 7rem;
       display: flex;
       flex-direction: column;
       align-items: center;
+      justify-content: center;
       gap: 2rem;
       opacity: 0;
       transform: translateY(24px);
@@ -120,6 +127,9 @@
     /* Envelope container */
     .envelope-wrapper {
       position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       cursor: pointer;
       filter: drop-shadow(0 8px 24px rgba(92, 74, 61, 0.2));
       transition: transform 0.3s ease;
@@ -193,13 +203,14 @@
       z-index: 2;
       opacity: 0;
       pointer-events: none;
+      overflow: visible;
       transition: opacity 0.5s ease 0.3s, transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s;
       border: 3px solid var(--outline);
       box-shadow: 6px 6px 0 var(--outline);
     }
     .envelope-wrapper.opened .letter {
       opacity: 1;
-      transform: translate(-50%, -120%);
+      transform: translate(-50%, -85%);
       pointer-events: auto;
     }
 
@@ -229,12 +240,53 @@
       transform: translateY(0);
     }
 
+    /* Flowers that stay with the letter - emoji flowers */
+    .letter-flowers {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      pointer-events: none;
+      overflow: visible;
+    }
+    .letter-flower {
+      position: absolute;
+      font-size: 1.75rem;
+      line-height: 1;
+      opacity: 0;
+      transition: opacity 0.5s ease 0.4s;
+      animation: flower-float 3s ease-in-out infinite;
+      filter: drop-shadow(0 1px 2px rgba(0,0,0,0.1));
+    }
+    .envelope-wrapper.opened .letter .letter-flower {
+      opacity: 1;
+    }
+    .letter-flower:nth-child(1) { top: -4px; left: -2px; animation-delay: 0s; }
+    .letter-flower:nth-child(2) { top: -4px; right: -2px; left: auto; animation-delay: 0.4s; }
+    .letter-flower:nth-child(3) { bottom: -4px; left: -2px; top: auto; animation-delay: 0.2s; }
+    .letter-flower:nth-child(4) { bottom: -4px; right: -2px; left: auto; top: auto; animation-delay: 0.6s; }
+    .letter-flower:nth-child(5) { top: 50%; left: -14px; transform: translateY(-50%); animation-delay: 0.1s; }
+    .letter-flower:nth-child(6) { top: 50%; right: -14px; left: auto; transform: translateY(-50%); animation-delay: 0.5s; }
+    @keyframes flower-float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-4px); }
+    }
+    .letter-flower:nth-child(5), .letter-flower:nth-child(6) {
+      animation-name: flower-float-side;
+    }
+    @keyframes flower-float-side {
+      0%, 100% { transform: translateY(-50%); }
+      50% { transform: translateY(calc(-50% - 4px)); }
+    }
+
     .tap-hint {
       font-family: 'Press Start 2P', cursive;
       font-size: 0.5rem;
       color: var(--pink-dark);
       opacity: 0.9;
       margin-top: 0.5rem;
+      text-align: center;
       animation: pulse 2s ease-in-out infinite;
     }
     .envelope-wrapper.opened .tap-hint-open {
@@ -246,6 +298,7 @@
       font-size: 0.5rem;
       color: var(--pink-dark);
       margin-top: 0.5rem;
+      text-align: center;
       animation: pulse 2s ease-in-out infinite;
     }
     .envelope-wrapper.opened .tap-hint-close {
@@ -461,7 +514,8 @@
     @media (max-width: 400px) {
       body { padding: 0.75rem; }
       h1 { font-size: 0.6rem; margin-bottom: 1.25rem; }
-      .scene { gap: 1.5rem; }
+      .scene { gap: 1.5rem; margin-top: 6rem; }
+      .envelope-wrapper.opened .letter { transform: translate(-50%, -75%); }
       .envelope { width: 260px; height: 168px; }
       .envelope-flap {
         border-left-width: 130px;
@@ -497,6 +551,59 @@
       .penguin-bow::before { width: 5px; height: 5px; }
       footer { font-size: 0.4rem; margin-top: 1.25rem; }
     }
+
+    /* Photo ring around letter - visible when envelope open, tilt phone to look around */
+    .memories-wrap {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      pointer-events: none;
+      z-index: 500;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.4s ease, visibility 0.4s ease;
+    }
+    body.envelope-open .memories-wrap {
+      opacity: 1;
+      visibility: visible;
+    }
+    .memories-center {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 1px;
+      height: 1px;
+      margin: -1px 0 0 -1px;
+      perspective: 1000px;
+    }
+    .photo-ring-3d {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      transform-style: preserve-3d;
+      transition: transform 0.15s ease-out;
+    }
+    .photo-item {
+      position: absolute;
+      width: 72px;
+      height: 72px;
+      margin: -36px 0 0 -36px;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 3px solid var(--outline);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      backface-visibility: hidden;
+    }
+    .photo-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
   </style>
 </head>
 <body>
@@ -516,6 +623,14 @@
         <div class="envelope-inner"></div>
         <div class="envelope-flap"></div>
         <div class="letter">
+          <div class="letter-flowers" aria-hidden="true">
+            <span class="letter-flower">🌸</span>
+            <span class="letter-flower">🌷</span>
+            <span class="letter-flower">🌹</span>
+            <span class="letter-flower">💐</span>
+            <span class="letter-flower">🌺</span>
+            <span class="letter-flower">🌻</span>
+          </div>
           <p class="heart-line">❤️ 10 years of us ❤️</p>
           <p>
             Every day with you feels like the best adventure. Thank you for a decade of love, laughter, and countless memories. Here’s to many more years of cute moments and cozy days together.
@@ -564,6 +679,12 @@
 
   <div id="confetti-container" aria-hidden="true"></div>
 
+  <div class="memories-wrap" id="memories-wrap" aria-hidden="true">
+    <div class="memories-center">
+      <div class="photo-ring-3d" id="photo-ring-3d"></div>
+    </div>
+  </div>
+
   <script>
     const envelope = document.getElementById('envelope');
     const letter = document.querySelector('.letter');
@@ -571,6 +692,21 @@
     const penguins = document.querySelectorAll('.penguin');
     const footer = document.getElementById('footer');
     const confettiContainer = document.getElementById('confetti-container');
+    const photoRing3d = document.getElementById('photo-ring-3d');
+
+    // Add your image paths here – put photos in the images/ folder (same or different for each)
+    const MEMORY_IMAGES = [
+      'images/IMG_0016.png',
+      'images/IMG_0016.png',
+      'images/IMG_0016.png',
+      'images/IMG_0016.png',
+      'images/IMG_0016.png',
+      'images/IMG_0016.png',
+      'images/IMG_0016.png',
+      'images/IMG_0016.png'
+    ];
+    const PHOTO_RING_RADIUS = 140;
+    const PHOTO_SIZE = 72;
 
     const HEARTS = ['❤️', '💕', '💗', '💖', '✨', '🐧'];
     const FLOWERS = ['🌸', '🌷', '🌹', '💐', '🌺', '🌻', '🪷', '💮'];
@@ -677,10 +813,88 @@
       });
     }
 
+    // ---- Photo ring: build once, tilt to look around ----
+    function buildPhotoRing() {
+      if (!photoRing3d || photoRing3d.children.length > 0) return;
+      const n = MEMORY_IMAGES.length;
+      MEMORY_IMAGES.forEach((src, i) => {
+        const deg = (i / n) * 360;
+        const div = document.createElement('div');
+        div.className = 'photo-item';
+        div.style.transform = 'rotateY(' + (deg + 180) + 'deg) translateZ(' + PHOTO_RING_RADIUS + 'px)';
+        const img = document.createElement('img');
+        img.src = src;
+        img.alt = 'Memory ' + (i + 1);
+        img.loading = 'lazy';
+        img.onerror = function () { this.style.background = 'var(--pink)'; this.style.minHeight = '100%'; };
+        div.appendChild(img);
+        photoRing3d.appendChild(div);
+      });
+    }
+
+    var orientationGamma = 0;
+    var orientationBeta = 0;
+    var useMouse = false;
+
+    function applyRingTransform() {
+      var rotY = -orientationGamma * 0.5;
+      var rotX = orientationBeta * 0.4;
+      if (photoRing3d) photoRing3d.style.transform = 'rotateY(' + rotY + 'deg) rotateX(' + rotX + 'deg)';
+    }
+
+    function onOrientation(e) {
+      if (e.gamma != null) orientationGamma = e.gamma;
+      if (e.beta != null) orientationBeta = e.beta;
+      useMouse = false;
+      applyRingTransform();
+    }
+
+    function onMouseMove(e) {
+      if (!useMouse || !document.body.classList.contains('envelope-open')) return;
+      var w = window.innerWidth;
+      var h = window.innerHeight;
+      orientationGamma = (e.clientX / w - 0.5) * 60;
+      orientationBeta = (e.clientY / h - 0.5) * 60;
+      applyRingTransform();
+    }
+
+    function startDeviceOrientation() {
+      useMouse = true;
+      orientationGamma = 0;
+      orientationBeta = 0;
+      window.addEventListener('mousemove', onMouseMove);
+      if (typeof DeviceOrientationEvent === 'undefined') return;
+      if (DeviceOrientationEvent.requestPermission) {
+        DeviceOrientationEvent.requestPermission()
+          .then(function (permission) {
+            if (permission === 'granted') {
+              useMouse = false;
+              window.addEventListener('deviceorientation', onOrientation);
+            }
+          })
+          .catch(function () {});
+        return;
+      }
+      window.addEventListener('deviceorientation', onOrientation);
+      useMouse = false;
+    }
+
+    function stopDeviceOrientation() {
+      window.removeEventListener('deviceorientation', onOrientation);
+      window.removeEventListener('mousemove', onMouseMove);
+      orientationGamma = 0;
+      orientationBeta = 0;
+      if (photoRing3d) photoRing3d.style.transform = '';
+    }
+
     function openEnvelope() {
       if (envelope.classList.contains('opened')) return;
       envelope.classList.add('opened');
       envelope.setAttribute('aria-label', 'Envelope opened');
+      document.body.classList.add('envelope-open');
+
+      buildPhotoRing();
+      startDeviceOrientation();
 
       const rect = envelope.getBoundingClientRect();
       const originX = rect.left + rect.width / 2;
@@ -694,6 +908,8 @@
       if (!envelope.classList.contains('opened')) return;
       envelope.classList.remove('opened');
       envelope.setAttribute('aria-label', 'Open envelope');
+      document.body.classList.remove('envelope-open');
+      stopDeviceOrientation();
       letterLines.forEach((line) => {
         line.classList.remove('reveal-line', 'visible');
       });
