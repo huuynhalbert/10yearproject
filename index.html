@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <title>10 Years Together 💕</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --cream: #fff8f0;
+      --paper: #fef9f3;
+      --envelope: #e8d5c4;
+      --envelope-dark: #d4b8a2;
+      --pink: #f4c2c2;
+      --pink-dark: #e8a0a0;
+      --text: #3d2c2e;
+      --outline: #2d1b2e;
+      --pixel-size: 4px;
+    }
+
+    html {
+      image-rendering: pixelated;
+      image-rendering: crisp-edges;
+    }
+
+    body {
+      min-height: 100vh;
+      min-height: calc(100vh + env(safe-area-inset-bottom));
+      min-height: -webkit-fill-available;
+      background: #e8dce8;
+      background-image:
+        linear-gradient(rgba(0,0,0,.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,0,0,.03) 1px, transparent 1px);
+      background-size: var(--pixel-size) var(--pixel-size);
+      font-family: 'Press Start 2P', cursive;
+      color: var(--text);
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      padding-left: max(1rem, env(safe-area-inset-left));
+      padding-right: max(1rem, env(safe-area-inset-right));
+      padding-top: max(1rem, env(safe-area-inset-top));
+      padding-bottom: max(1.5rem, env(safe-area-inset-bottom));
+      position: relative;
+      margin: 0 auto;
+      max-width: 390px;
+    }
+
+    /* Pixel sparkles */
+    .sparkle {
+      position: fixed;
+      width: 8px;
+      height: 8px;
+      background: var(--pink);
+      border: 2px solid var(--outline);
+      animation: twinkle 3s ease-in-out infinite;
+      pointer-events: none;
+    }
+    .sparkle:nth-child(1) { left: 10%; top: 20%; animation-delay: 0s; }
+    .sparkle:nth-child(2) { left: 85%; top: 15%; animation-delay: 0.5s; }
+    .sparkle:nth-child(3) { left: 25%; top: 80%; animation-delay: 1s; }
+    .sparkle:nth-child(4) { left: 70%; top: 70%; animation-delay: 1.5s; }
+    .sparkle:nth-child(5) { left: 50%; top: 10%; animation-delay: 2s; }
+    .sparkle:nth-child(6) { left: 15%; top: 50%; animation-delay: 0.8s; }
+    .sparkle:nth-child(7) { left: 90%; top: 45%; animation-delay: 1.2s; }
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.4; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1); }
+    }
+
+    h1 {
+      font-family: 'Press Start 2P', cursive;
+      font-size: clamp(0.65rem, 4vw, 1rem);
+      color: var(--pink-dark);
+      margin-bottom: 2rem;
+      text-align: center;
+      line-height: 1.8;
+      text-shadow:
+        -1px -1px 0 var(--outline),
+        1px -1px 0 var(--outline),
+        -1px 1px 0 var(--outline),
+        1px 1px 0 var(--outline);
+      opacity: 0;
+      transform: translateY(-20px);
+      transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    h1.animate-in {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .scene {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2rem;
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease 0.2s, transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s;
+    }
+    .scene.animate-in {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Envelope container */
+    .envelope-wrapper {
+      position: relative;
+      cursor: pointer;
+      filter: drop-shadow(0 8px 24px rgba(92, 74, 61, 0.2));
+      transition: transform 0.3s ease;
+      perspective: 1000px;
+      transform-style: preserve-3d;
+    }
+    .envelope-wrapper:hover:not(.opened) {
+      transform: scale(1.02);
+    }
+    .envelope-wrapper.opened {
+      cursor: pointer;
+    }
+    .envelope-wrapper.opened:hover {
+      transform: scale(1);
+    }
+
+    .envelope {
+      position: relative;
+      width: 280px;
+      height: 180px;
+      background: var(--envelope);
+      border: 3px solid var(--outline);
+      box-shadow: 6px 6px 0 var(--outline);
+      transform-style: preserve-3d;
+      transform: translateZ(0);
+    }
+
+    /* Envelope flap - pixel style */
+    .envelope-flap {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 0;
+      border-left: 140px solid transparent;
+      border-right: 140px solid transparent;
+      border-top: 100px solid var(--envelope-dark);
+      filter: drop-shadow(0 -3px 0 var(--outline));
+      transform-origin: top center;
+      transition: transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+      backface-visibility: hidden;
+    }
+    .envelope-wrapper.opened .envelope-flap {
+      transform: rotateX(-180deg);
+    }
+
+    /* Envelope inner triangle (front) */
+    .envelope-inner {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 0;
+      border-left: 140px solid transparent;
+      border-right: 140px solid transparent;
+      border-bottom: 90px solid rgba(212, 184, 162, 0.5);
+      z-index: 1;
+    }
+
+    /* Letter - pixel style */
+    .letter {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 240px;
+      min-height: 160px;
+      background: var(--paper);
+      padding: 1.5rem 1.25rem;
+      z-index: 2;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.5s ease 0.3s, transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s;
+      border: 3px solid var(--outline);
+      box-shadow: 6px 6px 0 var(--outline);
+    }
+    .envelope-wrapper.opened .letter {
+      opacity: 1;
+      transform: translate(-50%, -120%);
+      pointer-events: auto;
+    }
+
+    .letter p {
+      font-family: 'Press Start 2P', cursive;
+      font-size: 0.55rem;
+      line-height: 2;
+      color: var(--text);
+      text-align: center;
+    }
+    .letter .signature {
+      margin-top: 0.75rem;
+      font-size: 0.55rem;
+      color: var(--pink-dark);
+    }
+    .letter .heart-line {
+      font-size: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+    .letter p.reveal-line {
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    .letter p.reveal-line.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .tap-hint {
+      font-family: 'Press Start 2P', cursive;
+      font-size: 0.5rem;
+      color: var(--pink-dark);
+      opacity: 0.9;
+      margin-top: 0.5rem;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    .envelope-wrapper.opened .tap-hint-open {
+      display: none;
+    }
+    .tap-hint-close {
+      display: none;
+      font-family: 'Press Start 2P', cursive;
+      font-size: 0.5rem;
+      color: var(--pink-dark);
+      margin-top: 0.5rem;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    .envelope-wrapper.opened .tap-hint-close {
+      display: block;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 0.6; }
+      50% { opacity: 1; }
+    }
+
+    /* Penguins */
+    .penguins {
+      display: flex;
+      align-items: flex-end;
+      gap: 1.5rem;
+      margin-top: 1rem;
+    }
+
+    .penguin {
+      width: 80px;
+      height: 100px;
+      position: relative;
+      animation: wobble 2s ease-in-out infinite;
+    }
+    .penguin:nth-child(2) {
+      animation-delay: 0.3s;
+    }
+    .penguin.celebrate {
+      animation: celebrate 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    }
+    @keyframes celebrate {
+      0% { transform: scale(1) rotate(-2deg); }
+      40% { transform: scale(1.25) rotate(2deg); }
+      70% { transform: scale(1.1) rotate(-1deg); }
+      100% { transform: scale(1) rotate(0deg); }
+    }
+    @keyframes wobble {
+      0%, 100% { transform: rotate(-2deg); }
+      50% { transform: rotate(2deg); }
+    }
+
+    /* Pixel penguins */
+    .penguin-body {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 56px;
+      height: 72px;
+      background: #1a1a1a;
+      border: 2px solid var(--outline);
+      clip-path: polygon(0 12px, 12px 0, 44px 0, 56px 12px, 56px 72px, 0 72px);
+    }
+    .penguin-belly {
+      position: absolute;
+      bottom: 4px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 32px;
+      height: 44px;
+      background: #fff5d6;
+      border: 2px solid var(--outline);
+      clip-path: polygon(4px 0, 28px 0, 32px 44px, 0 44px);
+    }
+    .penguin-face {
+      position: absolute;
+      top: -4px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 44px;
+      height: 40px;
+      background: #1a1a1a;
+      border: 2px solid var(--outline);
+    }
+    .penguin-eye {
+      position: absolute;
+      top: 10px;
+      width: 10px;
+      height: 10px;
+      background: #fff;
+      border: 2px solid var(--outline);
+    }
+    .penguin-eye.left { left: 8px; }
+    .penguin-eye.right { right: 8px; }
+    .penguin-beak {
+      position: absolute;
+      bottom: 6px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 0;
+      border-left: 6px solid transparent;
+      border-right: 6px solid transparent;
+      border-top: 10px solid #e88c20;
+      filter: drop-shadow(0 2px 0 var(--outline));
+    }
+    .penguin-wing {
+      position: absolute;
+      width: 18px;
+      height: 32px;
+      background: #1a1a1a;
+      border: 2px solid var(--outline);
+      bottom: 24px;
+      transform-origin: top center;
+    }
+    .penguin-wing.left { left: -6px; transform: rotate(-12deg); }
+    .penguin-wing.right { right: -6px; transform: rotate(12deg); }
+    .penguin-feet {
+      position: absolute;
+      bottom: -4px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 28px;
+      height: 8px;
+      display: flex;
+      justify-content: space-between;
+    }
+    .penguin-feet::before,
+    .penguin-feet::after {
+      content: '';
+      width: 12px;
+      height: 8px;
+      background: #e88c20;
+      border: 2px solid var(--outline);
+    }
+
+    /* Heart in penguin's wing */
+    .penguin.holding .penguin-wing.right {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .penguin-heart {
+      position: absolute;
+      right: -18px;
+      bottom: 5px;
+      font-size: 1.4rem;
+      animation: heartbeat 1s ease-in-out infinite;
+    }
+    @keyframes heartbeat {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.15); }
+    }
+
+    /* Bow on second penguin - pixel */
+    .penguin-bow {
+      position: absolute;
+      top: -6px;
+      right: 0;
+      width: 16px;
+      height: 12px;
+      background: var(--pink);
+      border: 2px solid var(--outline);
+    }
+    .penguin-bow::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 6px;
+      height: 6px;
+      background: var(--pink-dark);
+      border: 1px solid var(--outline);
+    }
+
+    footer {
+      font-family: 'Press Start 2P', cursive;
+      margin-top: 2rem;
+      font-size: 0.45rem;
+      color: var(--pink-dark);
+      opacity: 0;
+      transition: opacity 0.6s ease 0.5s;
+      text-align: center;
+      line-height: 1.8;
+    }
+    footer.animate-in {
+      opacity: 0.8;
+    }
+
+    /* Confetti container - full viewport for mobile */
+    #confetti-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1000;
+      overflow: hidden;
+    }
+    .confetti-piece {
+      position: absolute;
+      opacity: 1;
+      will-change: transform, opacity;
+      z-index: 1001;
+    }
+    .confetti-piece.confetti-paper {
+      width: 8px;
+      height: 8px;
+      border: 1px solid var(--outline);
+    }
+    .confetti-piece.confetti-heart {
+      font-size: 1.1rem;
+      line-height: 1;
+    }
+    .confetti-piece.confetti-flower {
+      font-size: 1.25rem;
+      line-height: 1;
+    }
+
+    /* iPhone / narrow layout - pixel */
+    @media (max-width: 400px) {
+      body { padding: 0.75rem; }
+      h1 { font-size: 0.6rem; margin-bottom: 1.25rem; }
+      .scene { gap: 1.5rem; }
+      .envelope { width: 260px; height: 168px; }
+      .envelope-flap {
+        border-left-width: 130px;
+        border-right-width: 130px;
+        border-top-width: 93px;
+      }
+      .envelope-inner {
+        border-left-width: 130px;
+        border-right-width: 130px;
+        border-bottom-width: 84px;
+      }
+      .letter { width: 220px; min-height: 150px; padding: 1.15rem 1rem; }
+      .letter p { font-size: 0.45rem; }
+      .letter .heart-line { font-size: 0.4rem; }
+      .letter .signature { font-size: 0.45rem; }
+      .tap-hint-open { font-size: 0.45rem; }
+      .tap-hint-close { font-size: 0.45rem; }
+      .penguins { gap: 1rem; margin-top: 0.5rem; }
+      .penguin { width: 64px; height: 82px; }
+      .penguin-body { width: 46px; height: 62px; clip-path: polygon(0 10px, 10px 0, 36px 0, 46px 10px, 46px 62px, 0 62px); }
+      .penguin-belly { width: 26px; height: 36px; clip-path: polygon(2px 0, 24px 0, 26px 36px, 0 36px); }
+      .penguin-face { width: 38px; height: 34px; }
+      .penguin-eye { width: 8px; height: 8px; top: 8px; }
+      .penguin-eye.left { left: 6px; }
+      .penguin-eye.right { right: 6px; }
+      .penguin-beak { border-left-width: 5px; border-right-width: 5px; border-top-width: 8px; }
+      .penguin-wing { width: 14px; height: 26px; bottom: 20px; }
+      .penguin-wing.left { left: -5px; }
+      .penguin-wing.right { right: -5px; }
+      .penguin-feet::before, .penguin-feet::after { width: 10px; height: 6px; }
+      .penguin-heart { font-size: 0.9rem; right: -12px; bottom: 4px; }
+      .penguin-bow { width: 14px; height: 10px; }
+      .penguin-bow::before { width: 5px; height: 5px; }
+      footer { font-size: 0.4rem; margin-top: 1.25rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="sparkle"></div>
+  <div class="sparkle"></div>
+  <div class="sparkle"></div>
+  <div class="sparkle"></div>
+  <div class="sparkle"></div>
+  <div class="sparkle"></div>
+  <div class="sparkle"></div>
+
+  <h1>10 Years Together 💕</h1>
+
+  <div class="scene">
+    <div class="envelope-wrapper" id="envelope" role="button" tabindex="0" aria-label="Open envelope">
+      <div class="envelope">
+        <div class="envelope-inner"></div>
+        <div class="envelope-flap"></div>
+        <div class="letter">
+          <p class="heart-line">❤️ 10 years of us ❤️</p>
+          <p>
+            Every day with you feels like the best adventure. Thank you for a decade of love, laughter, and countless memories. Here’s to many more years of cute moments and cozy days together.
+          </p>
+          <p class="signature">Forever yours 🐧💕</p>
+        </div>
+      </div>
+      <p class="tap-hint tap-hint-open">Click or tap the envelope to open</p>
+      <p class="tap-hint-close">Tap to close</p>
+    </div>
+
+    <div class="penguins">
+      <div class="penguin">
+        <div class="penguin-body">
+          <div class="penguin-belly"></div>
+        </div>
+        <div class="penguin-face">
+          <div class="penguin-eye left"></div>
+          <div class="penguin-eye right"></div>
+          <div class="penguin-beak"></div>
+        </div>
+        <div class="penguin-wing left"></div>
+        <div class="penguin-wing right">
+          <span class="penguin-heart" aria-hidden="true">❤️</span>
+        </div>
+        <div class="penguin-feet"></div>
+      </div>
+      <div class="penguin holding">
+        <div class="penguin-body">
+          <div class="penguin-belly"></div>
+        </div>
+        <div class="penguin-face">
+          <div class="penguin-eye left"></div>
+          <div class="penguin-eye right"></div>
+          <div class="penguin-beak"></div>
+          <div class="penguin-bow"></div>
+        </div>
+        <div class="penguin-wing left"></div>
+        <div class="penguin-wing right"></div>
+        <div class="penguin-feet"></div>
+      </div>
+    </div>
+  </div>
+
+  <footer id="footer">Made with love for our 10 year anniversary 🐧</footer>
+
+  <div id="confetti-container" aria-hidden="true"></div>
+
+  <script>
+    const envelope = document.getElementById('envelope');
+    const letter = document.querySelector('.letter');
+    const letterLines = document.querySelectorAll('.letter p');
+    const penguins = document.querySelectorAll('.penguin');
+    const footer = document.getElementById('footer');
+    const confettiContainer = document.getElementById('confetti-container');
+
+    const HEARTS = ['❤️', '💕', '💗', '💖', '✨', '🐧'];
+    const FLOWERS = ['🌸', '🌷', '🌹', '💐', '🌺', '🌻', '🪷', '💮'];
+    const CONFETTI_COLORS = ['#f4c2c2', '#e8a0a0', '#ffb6c1', '#ffd700', '#fff5ee', '#ffe4e1', '#dda0dd', '#98fb98'];
+    const PAPER_COUNT = 42;
+    const HEART_COUNT = 18;
+    const FLOWER_COUNT = 20;
+    const DURATION_MS = 2800;
+
+    // ---- Page load: staggered entrance ----
+    function runEntranceAnimations() {
+      requestAnimationFrame(() => {
+        document.querySelector('h1').classList.add('animate-in');
+      });
+      setTimeout(() => {
+        document.querySelector('.scene').classList.add('animate-in');
+      }, 150);
+      setTimeout(() => {
+        footer.classList.add('animate-in');
+      }, 500);
+    }
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', runEntranceAnimations);
+    } else {
+      runEntranceAnimations();
+    }
+
+    // ---- Confetti burst: paper + hearts + flowers (JS-driven) ----
+    function burstConfetti(originX, originY) {
+      confettiContainer.innerHTML = '';
+      const start = performance.now();
+      const gravity = 0.0004;
+      const pieces = [];
+
+      function addPiece(type) {
+        const el = document.createElement('span');
+        if (type === 'paper') {
+          el.className = 'confetti-piece confetti-paper';
+          el.style.background = CONFETTI_COLORS[Math.floor(Math.random() * CONFETTI_COLORS.length)];
+        } else if (type === 'heart') {
+          el.className = 'confetti-piece confetti-heart';
+          el.textContent = HEARTS[Math.floor(Math.random() * HEARTS.length)];
+        } else {
+          el.className = 'confetti-piece confetti-flower';
+          el.textContent = FLOWERS[Math.floor(Math.random() * FLOWERS.length)];
+        }
+        const angle = Math.random() * Math.PI * 2;
+        const speed = 90 + Math.random() * 110;
+        const data = {
+          vx: Math.cos(angle) * speed,
+          vy: -100 - Math.random() * 80,
+          rot0: Math.random() * 360,
+          rotSpeed: (Math.random() - 0.5) * 0.4,
+          wobble: (Math.random() - 0.5) * 2,
+          seed: Math.random() * 10
+        };
+        el.style.left = originX + 'px';
+        el.style.top = originY + 'px';
+        confettiContainer.appendChild(el);
+        pieces.push({ el, data });
+      }
+
+      for (let i = 0; i < PAPER_COUNT; i++) addPiece('paper');
+      for (let i = 0; i < HEART_COUNT; i++) addPiece('heart');
+      for (let i = 0; i < FLOWER_COUNT; i++) addPiece('flower');
+
+      function tick(now) {
+        const elapsed = now - start;
+        const t = Math.min(elapsed / DURATION_MS, 1);
+
+        pieces.forEach(({ el, data: d }, i) => {
+          const x = d.vx * elapsed * 0.2 + d.wobble * Math.sin(elapsed * 0.006 + d.seed) * 18;
+          const y = d.vy * elapsed * 0.18 + 0.5 * gravity * elapsed * elapsed;
+          const rot = d.rot0 + elapsed * d.rotSpeed;
+          const opacity = t > 0.82 ? (1 - t) / 0.18 : 1;
+          const scale = 0.9 + 0.25 * Math.sin(elapsed * 0.003 + d.seed);
+          el.style.transform = `translate(${x}px, ${y}px) rotate(${rot}deg) scale(${scale})`;
+          el.style.opacity = String(opacity);
+        });
+
+        if (t < 1) requestAnimationFrame(tick);
+        else confettiContainer.innerHTML = '';
+      }
+      requestAnimationFrame(tick);
+    }
+
+    // ---- Letter lines staggered reveal ----
+    function revealLetterLines() {
+      letterLines.forEach((line, i) => {
+        line.classList.add('reveal-line');
+        setTimeout(() => {
+          line.classList.add('visible');
+        }, 400 + i * 220);
+      });
+    }
+
+    // ---- Penguin celebration bounce ----
+    function celebratePenguins() {
+      penguins.forEach((p, i) => {
+        p.classList.remove('celebrate');
+        void p.offsetWidth;
+        setTimeout(() => p.classList.add('celebrate'), i * 80);
+        setTimeout(() => p.classList.remove('celebrate'), 700);
+      });
+    }
+
+    function openEnvelope() {
+      if (envelope.classList.contains('opened')) return;
+      envelope.classList.add('opened');
+      envelope.setAttribute('aria-label', 'Envelope opened');
+
+      const rect = envelope.getBoundingClientRect();
+      const originX = rect.left + rect.width / 2;
+      const originY = rect.top + rect.height / 2;
+      burstConfetti(originX, originY);
+      celebratePenguins();
+      setTimeout(revealLetterLines, 600);
+    }
+
+    function closeEnvelope() {
+      if (!envelope.classList.contains('opened')) return;
+      envelope.classList.remove('opened');
+      envelope.setAttribute('aria-label', 'Open envelope');
+      letterLines.forEach((line) => {
+        line.classList.remove('reveal-line', 'visible');
+      });
+    }
+
+    var lastToggleTime = 0;
+    function toggleEnvelope(e) {
+      e.preventDefault();
+      if (Date.now() - lastToggleTime < 400) return;
+      lastToggleTime = Date.now();
+      if (envelope.classList.contains('opened')) closeEnvelope();
+      else openEnvelope();
+    }
+
+    envelope.addEventListener('click', toggleEnvelope);
+    envelope.addEventListener('touchend', function (e) {
+      e.preventDefault();
+      toggleEnvelope(e);
+    }, { passive: false });
+    envelope.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        toggleEnvelope(e);
+      }
+    });
+  </script>
+</body>
+</html>
