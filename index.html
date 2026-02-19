@@ -637,37 +637,6 @@
       visibility: visible;
     }
 
-    /* Music player - inside the letter, top-right corner */
-    .letter .music-player {
-      position: absolute;
-      top: 0.5rem;
-      right: 0.5rem;
-      z-index: 5;
-      display: flex;
-      align-items: center;
-      padding: 0.25rem;
-      background: var(--paper);
-      border: 3px solid var(--outline);
-      box-shadow: 3px 3px 0 var(--outline);
-    }
-    .music-player-btn {
-      width: 28px;
-      height: 28px;
-      padding: 0;
-      border: 3px solid var(--outline);
-      background: var(--pink);
-      color: var(--text);
-      font-size: 0.5rem;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      line-height: 1;
-      -webkit-tap-highlight-color: transparent;
-    }
-    .music-player-btn:hover { background: var(--pink-dark); }
-    .music-player-btn:focus { outline: 2px solid var(--outline); outline-offset: 2px; }
-
     /* Music box - visible before opening envelope, play song first */
     .music-box {
       display: flex;
@@ -793,6 +762,9 @@
 
   <div class="scene">
     <div class="music-box" aria-label="Music box – play our song">
+      <audio id="letter-music" preload="metadata" loop>
+        <source src="Justin%20Bieber%20-%20Lifetime.mp3" type="audio/mpeg">
+      </audio>
       <div class="music-box-lid" aria-hidden="true"></div>
       <span class="music-box-label">Play Song First</span>
       <button type="button" class="music-box-btn" id="music-box-play-btn" aria-label="Play music">▶</button>
@@ -802,12 +774,6 @@
         <div class="envelope-inner"></div>
         <div class="envelope-flap"></div>
         <div class="letter">
-          <div class="music-player" id="music-player" aria-label="Background music">
-            <audio id="letter-music" preload="metadata" loop>
-              <source src="Justin%20Bieber%20-%20Lifetime.mp3" type="audio/mpeg">
-            </audio>
-            <button type="button" class="music-player-btn" id="music-play-btn" aria-label="Play music">▶</button>
-          </div>
           <div class="letter-flowers" aria-hidden="true">
             <span class="letter-flower"><img src="flowers/iq8u65d6nvev1415rb3j0sbfeu-f8507cc2a651bc1bfefaa8af8968a3b0.png" alt=""></span>
             <span class="letter-flower"><img src="flowers/ac7ladmi02vths0bsgf9510nk8-fb150c79a8a0374595b91b265a1f874c.png" alt=""></span>
@@ -1059,6 +1025,9 @@
 
       buildCarousel();
 
+      var letterEl = document.querySelector('.letter');
+      if (letterEl) letterEl.scrollTop = 0;
+
       var originX = window.innerWidth * 0.5;
       var originY = window.innerHeight * 0.45;
       requestAnimationFrame(function () {
@@ -1081,27 +1050,37 @@
     }
 
     var lastToggleTime = 0;
-    function toggleEnvelope(e) {
+    var lastCloseTapTime = 0;
+    var DOUBLE_TAP_MS = 450;
+
+    function handleEnvelopeTap(e) {
       e.preventDefault();
-      if (Date.now() - lastToggleTime < 400) return;
-      lastToggleTime = Date.now();
-      if (envelope.classList.contains('opened')) closeEnvelope();
-      else openEnvelope();
+      var now = Date.now();
+      if (envelope.classList.contains('opened')) {
+        if (lastCloseTapTime && (now - lastCloseTapTime) < DOUBLE_TAP_MS) {
+          lastCloseTapTime = 0;
+          closeEnvelope();
+        } else {
+          lastCloseTapTime = now;
+        }
+        return;
+      }
+      if (now - lastToggleTime < 400) return;
+      lastToggleTime = now;
+      openEnvelope();
     }
 
-    envelope.addEventListener('click', toggleEnvelope);
+    envelope.addEventListener('click', handleEnvelopeTap);
     envelope.addEventListener('touchend', function (e) {
       e.preventDefault();
-      toggleEnvelope(e);
+      handleEnvelopeTap(e);
     }, { passive: false });
     var letterMusic = document.getElementById('letter-music');
     if (letterMusic) letterMusic.volume = 0.2;
-    var musicPlayBtn = document.getElementById('music-play-btn');
     var musicBoxPlayBtn = document.getElementById('music-box-play-btn');
     function setPlayButtonState(playing) {
       var label = playing ? 'Pause music' : 'Play music';
       var icon = playing ? '❚❚' : '▶';
-      if (musicPlayBtn) { musicPlayBtn.textContent = icon; musicPlayBtn.setAttribute('aria-label', label); }
       if (musicBoxPlayBtn) { musicBoxPlayBtn.textContent = icon; musicBoxPlayBtn.setAttribute('aria-label', label); }
     }
     function toggleMusic() {
@@ -1117,14 +1096,11 @@
     if (musicBoxPlayBtn && letterMusic) {
       musicBoxPlayBtn.addEventListener('click', function (e) { e.stopPropagation(); toggleMusic(); });
     }
-    if (musicPlayBtn && letterMusic) {
-      musicPlayBtn.addEventListener('click', function (e) { e.stopPropagation(); toggleMusic(); });
-    }
 
     envelope.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
-        toggleEnvelope(e);
+        handleEnvelopeTap(e);
       }
     });
   </script>
