@@ -196,10 +196,11 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: 240px;
+      width: 340px;
+      max-height: 55vh;
       min-height: 160px;
       background: var(--paper);
-      padding: 1.5rem 1.25rem;
+      padding: 1.25rem 1.1rem;
       z-index: 2;
       opacity: 0;
       pointer-events: none;
@@ -210,25 +211,39 @@
     }
     .envelope-wrapper.opened .letter {
       opacity: 1;
-      transform: translate(-50%, -85%);
+      transform: translate(-50%, -82%);
       pointer-events: auto;
+      max-height: 72dvh;
+      max-width: min(340px, calc(100vw - 2rem));
+      overflow-x: hidden;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+    .envelope-wrapper.opened .letter::-webkit-scrollbar {
+      display: none;
     }
 
     .letter p {
       font-family: 'Press Start 2P', cursive;
-      font-size: 0.55rem;
-      line-height: 2;
+      font-size: 0.5rem;
+      line-height: 1.85;
       color: var(--text);
       text-align: center;
+      margin-bottom: 0.5rem;
+    }
+    .letter p:last-child {
+      margin-bottom: 0;
     }
     .letter .signature {
-      margin-top: 0.75rem;
-      font-size: 0.55rem;
+      margin-top: 0.5rem;
+      font-size: 0.5rem;
       color: var(--pink-dark);
     }
     .letter .heart-line {
-      font-size: 0.5rem;
-      margin-bottom: 0.5rem;
+      font-size: 0.48rem;
+      margin-bottom: 0.4rem;
     }
     .letter p.reveal-line {
       opacity: 0;
@@ -527,12 +542,24 @@
       display: block;
     }
 
-    /* iPhone / narrow layout - pixel */
-    @media (max-width: 400px) {
+    /* Phone / narrow layout - letter fits viewport, starts at top */
+    @media (max-width: 480px) {
       body { padding: 0.75rem; }
       h1 { font-size: 0.6rem; margin-bottom: 1.25rem; }
       .scene { gap: 1.5rem; margin-top: 6rem; }
-      .envelope-wrapper.opened .letter { transform: translate(-50%, -75%); }
+      .envelope-wrapper.opened .letter {
+        position: fixed;
+        top: max(2.5rem, calc(env(safe-area-inset-top, 0px) + 1.5rem));
+        left: max(0.75rem, env(safe-area-inset-left, 0px));
+        right: max(0.75rem, env(safe-area-inset-right, 0px));
+        transform: none;
+        width: auto;
+        max-width: none;
+        max-height: calc(100dvh - 1.5rem - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px));
+        min-height: 200px;
+        overflow-x: hidden;
+        box-sizing: border-box;
+      }
       .envelope { width: 260px; height: 168px; }
       .envelope-flap {
         border-left-width: 130px;
@@ -544,10 +571,17 @@
         border-right-width: 130px;
         border-bottom-width: 84px;
       }
-      .letter { width: 220px; min-height: 150px; padding: 1.15rem 1rem; }
-      .letter p { font-size: 0.45rem; }
-      .letter .heart-line { font-size: 0.4rem; }
-      .letter .signature { font-size: 0.45rem; }
+      .letter {
+        min-height: 140px;
+        padding: 1rem 0.9rem;
+        box-sizing: border-box;
+      }
+      .envelope-wrapper.opened .letter {
+        width: auto;
+      }
+      .letter p { font-size: 0.42rem; line-height: 1.8; }
+      .letter .heart-line { font-size: 0.38rem; }
+      .letter .signature { font-size: 0.42rem; }
       .tap-hint-open { font-size: 0.45rem; }
       .tap-hint-close { font-size: 0.45rem; }
       .penguins { gap: 1rem; margin-top: 0.5rem; }
@@ -677,9 +711,16 @@
             <span class="letter-flower"><img src="flowers/iq8u65d6nvev1415rb3j0sbfeu-f8507cc2a651bc1bfefaa8af8968a3b0.png" alt=""></span>
           </div>
           <p class="heart-line">❤️ 10 years of us ❤️</p>
-          <p>
-            Every day with you feels like the best adventure. Thank you for a decade of love, laughter, and countless memories. Here’s to many more years of cute moments and cozy days together.
-          </p>
+          <p>From the moment we met in middle school, I had no idea that the girl sitting across from me would become the love of my life.</p>
+          <p>Back then, life was about homework, awkward school dances, and figuring out who we were. But even at that age, there was something about you that felt different. You were my first crush, my first best friend, and the first person who made my heart race for no reason at all.</p>
+          <p>We’ve grown up together. We’ve seen each other at our most awkward, our most uncertain, and our most ambitious. We’ve changed, we’ve learned, we’ve faced challenges — but somehow, through all of it, we kept choosing each other.</p>
+          <p>You’ve been there for every milestone. Every late-night talk about our dreams. Every setback that felt overwhelming. Every laugh that hurt our stomachs. You didn’t just grow up with me — you grew with me.</p>
+          <p>And what I love most is that loving you still feels the same at its core: simple, safe, and real. You are my comfort, my biggest supporter, and my best friend.</p>
+          <p>We started as kids who didn’t know what the future would look like. And now, standing here, I know exactly what I want my future to look like — I want it with you.</p>
+          <p>I want more inside jokes. More adventures. More ordinary Tuesdays that feel special because they’re with you. I want to build a home with you, build a life with you, and keep choosing you every single day.</p>
+          <p>So here we are — not those middle school kids anymore, but two people who grew up loving each other.</p>
+          <p>And I’m asking you now, the same way my heart did back then —</p>
+          <p>Will you marry me?</p>
           <p class="signature">Forever yours 🐧💕</p>
         </div>
       </div>
