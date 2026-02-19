@@ -133,9 +133,9 @@
 
     h1 {
       font-family: 'Press Start 2P', cursive;
-      font-size: clamp(0.65rem, 4vw, 1rem);
+      font-size: clamp(0.7rem, 4.5vw, 1.05rem);
       color: var(--pink-dark);
-      margin-bottom: 2rem;
+      margin-bottom: 1.5rem;
       text-align: center;
       line-height: 1.8;
       text-shadow:
@@ -156,15 +156,26 @@
     .scene {
       position: relative;
       width: 100%;
-      margin-top: 7rem;
+      min-height: 88vh;
+      min-height: 88dvh;
+      margin-top: 1.5rem;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 2rem;
+      gap: 2.25rem;
       opacity: 0;
       transform: translateY(24px);
       transition: opacity 0.7s ease 0.2s, transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s;
+    }
+    body:not(.envelope-open) .envelope-wrapper {
+      transform: scale(1.08);
+    }
+    body:not(.envelope-open) .envelope-wrapper:hover {
+      transform: scale(1.12);
+    }
+    body:not(.envelope-open) .music-box {
+      padding: 1.15rem 1.4rem;
     }
 
     .scene.animate-in {
@@ -185,7 +196,7 @@
       transform-style: preserve-3d;
     }
 
-    .envelope-wrapper:hover:not(.opened) {
+    body.envelope-open .envelope-wrapper:hover:not(.opened) {
       transform: scale(1.02);
     }
 
@@ -458,12 +469,21 @@
       }
     }
 
-    /* Penguins */
+    /* Penguins – hidden until envelope is open */
     .penguins {
       display: flex;
       align-items: flex-end;
       gap: 1.5rem;
       margin-top: 1rem;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity 0.45s ease, visibility 0.45s ease;
+    }
+    body.envelope-open .penguins {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
     }
 
     .penguin {
@@ -742,8 +762,12 @@
       }
 
       .scene {
-        gap: 0.75rem;
-        margin-top: 3.5rem;
+        min-height: 85dvh;
+        gap: 1.25rem;
+        margin-top: 2rem;
+      }
+      body:not(.envelope-open) .music-box {
+        padding: 0.85rem 1.1rem;
       }
 
       .music-box {
