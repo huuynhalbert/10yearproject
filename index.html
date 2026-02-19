@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <title>10 Years Together 💕</title>
+  <title>Website</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
@@ -50,8 +51,8 @@
       padding-bottom: max(1.5rem, env(safe-area-inset-bottom));
       background: #e8dce8;
       background-image:
-        linear-gradient(rgba(0,0,0,.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0,0,0,.03) 1px, transparent 1px);
+        linear-gradient(rgba(0, 0, 0, .03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 0, 0, .03) 1px, transparent 1px);
       background-size: var(--pixel-size) var(--pixel-size);
       font-family: 'Press Start 2P', cursive;
       color: var(--text);
@@ -73,16 +74,61 @@
       animation: twinkle 3s ease-in-out infinite;
       pointer-events: none;
     }
-    .sparkle:nth-child(1) { left: 10%; top: 20%; animation-delay: 0s; }
-    .sparkle:nth-child(2) { left: 85%; top: 15%; animation-delay: 0.5s; }
-    .sparkle:nth-child(3) { left: 25%; top: 80%; animation-delay: 1s; }
-    .sparkle:nth-child(4) { left: 70%; top: 70%; animation-delay: 1.5s; }
-    .sparkle:nth-child(5) { left: 50%; top: 10%; animation-delay: 2s; }
-    .sparkle:nth-child(6) { left: 15%; top: 50%; animation-delay: 0.8s; }
-    .sparkle:nth-child(7) { left: 90%; top: 45%; animation-delay: 1.2s; }
+
+    .sparkle:nth-child(1) {
+      left: 10%;
+      top: 20%;
+      animation-delay: 0s;
+    }
+
+    .sparkle:nth-child(2) {
+      left: 85%;
+      top: 15%;
+      animation-delay: 0.5s;
+    }
+
+    .sparkle:nth-child(3) {
+      left: 25%;
+      top: 80%;
+      animation-delay: 1s;
+    }
+
+    .sparkle:nth-child(4) {
+      left: 70%;
+      top: 70%;
+      animation-delay: 1.5s;
+    }
+
+    .sparkle:nth-child(5) {
+      left: 50%;
+      top: 10%;
+      animation-delay: 2s;
+    }
+
+    .sparkle:nth-child(6) {
+      left: 15%;
+      top: 50%;
+      animation-delay: 0.8s;
+    }
+
+    .sparkle:nth-child(7) {
+      left: 90%;
+      top: 45%;
+      animation-delay: 1.2s;
+    }
+
     @keyframes twinkle {
-      0%, 100% { opacity: 0.4; transform: scale(1); }
-      50% { opacity: 1; transform: scale(1); }
+
+      0%,
+      100% {
+        opacity: 0.4;
+        transform: scale(1);
+      }
+
+      50% {
+        opacity: 1;
+        transform: scale(1);
+      }
     }
 
     h1 {
@@ -101,6 +147,7 @@
       transform: translateY(-20px);
       transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
+
     h1.animate-in {
       opacity: 1;
       transform: translateY(0);
@@ -119,6 +166,7 @@
       transform: translateY(24px);
       transition: opacity 0.7s ease 0.2s, transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s;
     }
+
     .scene.animate-in {
       opacity: 1;
       transform: translateY(0);
@@ -136,12 +184,15 @@
       perspective: 1000px;
       transform-style: preserve-3d;
     }
+
     .envelope-wrapper:hover:not(.opened) {
       transform: scale(1.02);
     }
+
     .envelope-wrapper.opened {
       cursor: pointer;
     }
+
     .envelope-wrapper.opened:hover {
       transform: scale(1);
     }
@@ -172,6 +223,7 @@
       transition: transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
       backface-visibility: hidden;
     }
+
     .envelope-wrapper.opened .envelope-flap {
       transform: rotateX(-180deg);
     }
@@ -209,6 +261,7 @@
       border: 3px solid var(--outline);
       box-shadow: 6px 6px 0 var(--outline);
     }
+
     .envelope-wrapper.opened .letter {
       opacity: 1;
       transform: translate(-50%, -82%);
@@ -221,6 +274,7 @@
       scrollbar-width: none;
       -ms-overflow-style: none;
     }
+
     .envelope-wrapper.opened .letter::-webkit-scrollbar {
       display: none;
     }
@@ -233,23 +287,28 @@
       text-align: center;
       margin-bottom: 0.5rem;
     }
+
     .letter p:last-child {
       margin-bottom: 0;
     }
+
     .letter .signature {
       margin-top: 0.5rem;
       font-size: clamp(0.38rem, 1.8vw, 0.48rem);
       color: var(--pink-dark);
     }
+
     .letter .heart-line {
       font-size: clamp(0.36rem, 1.6vw, 0.45rem);
       margin-bottom: 0.4rem;
     }
+
     .letter p.reveal-line {
       opacity: 0;
       transform: translateY(8px);
       transition: opacity 0.5s ease, transform 0.5s ease;
     }
+
     .letter p.reveal-line.visible {
       opacity: 1;
       transform: translateY(0);
@@ -265,6 +324,7 @@
       pointer-events: none;
       overflow: visible;
     }
+
     .letter-flower {
       position: absolute;
       width: 36px;
@@ -272,33 +332,90 @@
       opacity: 0;
       transition: opacity 0.5s ease 0.4s;
       animation: flower-float 3s ease-in-out infinite;
-      filter: drop-shadow(0 1px 3px rgba(0,0,0,0.12));
+      filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.12));
     }
+
     .letter-flower img {
       width: 100%;
       height: 100%;
       object-fit: contain;
       display: block;
     }
+
     .envelope-wrapper.opened .letter .letter-flower {
       opacity: 1;
     }
-    .letter-flower:nth-child(1) { top: -4px; left: -2px; animation-delay: 0s; }
-    .letter-flower:nth-child(2) { top: -4px; right: -2px; left: auto; animation-delay: 0.4s; }
-    .letter-flower:nth-child(3) { bottom: -4px; left: -2px; top: auto; animation-delay: 0.2s; }
-    .letter-flower:nth-child(4) { bottom: -4px; right: -2px; left: auto; top: auto; animation-delay: 0.6s; }
-    .letter-flower:nth-child(5) { top: 50%; left: -14px; transform: translateY(-50%); animation-delay: 0.1s; }
-    .letter-flower:nth-child(6) { top: 50%; right: -14px; left: auto; transform: translateY(-50%); animation-delay: 0.5s; }
-    @keyframes flower-float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-4px); }
+
+    .letter-flower:nth-child(1) {
+      top: -4px;
+      left: -2px;
+      animation-delay: 0s;
     }
-    .letter-flower:nth-child(5), .letter-flower:nth-child(6) {
+
+    .letter-flower:nth-child(2) {
+      top: -4px;
+      right: -2px;
+      left: auto;
+      animation-delay: 0.4s;
+    }
+
+    .letter-flower:nth-child(3) {
+      bottom: -4px;
+      left: -2px;
+      top: auto;
+      animation-delay: 0.2s;
+    }
+
+    .letter-flower:nth-child(4) {
+      bottom: -4px;
+      right: -2px;
+      left: auto;
+      top: auto;
+      animation-delay: 0.6s;
+    }
+
+    .letter-flower:nth-child(5) {
+      top: 50%;
+      left: -14px;
+      transform: translateY(-50%);
+      animation-delay: 0.1s;
+    }
+
+    .letter-flower:nth-child(6) {
+      top: 50%;
+      right: -14px;
+      left: auto;
+      transform: translateY(-50%);
+      animation-delay: 0.5s;
+    }
+
+    @keyframes flower-float {
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-4px);
+      }
+    }
+
+    .letter-flower:nth-child(5),
+    .letter-flower:nth-child(6) {
       animation-name: flower-float-side;
     }
+
     @keyframes flower-float-side {
-      0%, 100% { transform: translateY(-50%); }
-      50% { transform: translateY(calc(-50% - 4px)); }
+
+      0%,
+      100% {
+        transform: translateY(-50%);
+      }
+
+      50% {
+        transform: translateY(calc(-50% - 4px));
+      }
     }
 
     .tap-hint {
@@ -310,9 +427,11 @@
       text-align: center;
       animation: pulse 2s ease-in-out infinite;
     }
+
     .envelope-wrapper.opened .tap-hint-open {
       display: none;
     }
+
     .tap-hint-close {
       display: none;
       font-family: 'Press Start 2P', cursive;
@@ -322,12 +441,21 @@
       text-align: center;
       animation: pulse 2s ease-in-out infinite;
     }
+
     .envelope-wrapper.opened .tap-hint-close {
       display: block;
     }
+
     @keyframes pulse {
-      0%, 100% { opacity: 0.6; }
-      50% { opacity: 1; }
+
+      0%,
+      100% {
+        opacity: 0.6;
+      }
+
+      50% {
+        opacity: 1;
+      }
     }
 
     /* Penguins */
@@ -344,21 +472,43 @@
       position: relative;
       animation: wobble 2s ease-in-out infinite;
     }
+
     .penguin:nth-child(2) {
       animation-delay: 0.3s;
     }
+
     .penguin.celebrate {
       animation: celebrate 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
     }
+
     @keyframes celebrate {
-      0% { transform: scale(1) rotate(-2deg); }
-      40% { transform: scale(1.25) rotate(2deg); }
-      70% { transform: scale(1.1) rotate(-1deg); }
-      100% { transform: scale(1) rotate(0deg); }
+      0% {
+        transform: scale(1) rotate(-2deg);
+      }
+
+      40% {
+        transform: scale(1.25) rotate(2deg);
+      }
+
+      70% {
+        transform: scale(1.1) rotate(-1deg);
+      }
+
+      100% {
+        transform: scale(1) rotate(0deg);
+      }
     }
+
     @keyframes wobble {
-      0%, 100% { transform: rotate(-2deg); }
-      50% { transform: rotate(2deg); }
+
+      0%,
+      100% {
+        transform: rotate(-2deg);
+      }
+
+      50% {
+        transform: rotate(2deg);
+      }
     }
 
     /* Pixel penguins */
@@ -373,6 +523,7 @@
       border: 2px solid var(--outline);
       clip-path: polygon(0 12px, 12px 0, 44px 0, 56px 12px, 56px 72px, 0 72px);
     }
+
     .penguin-belly {
       position: absolute;
       bottom: 4px;
@@ -384,6 +535,7 @@
       border: 2px solid var(--outline);
       clip-path: polygon(4px 0, 28px 0, 32px 44px, 0 44px);
     }
+
     .penguin-face {
       position: absolute;
       top: -4px;
@@ -394,6 +546,7 @@
       background: #1a1a1a;
       border: 2px solid var(--outline);
     }
+
     .penguin-eye {
       position: absolute;
       top: 10px;
@@ -402,8 +555,15 @@
       background: #fff;
       border: 2px solid var(--outline);
     }
-    .penguin-eye.left { left: 8px; }
-    .penguin-eye.right { right: 8px; }
+
+    .penguin-eye.left {
+      left: 8px;
+    }
+
+    .penguin-eye.right {
+      right: 8px;
+    }
+
     .penguin-beak {
       position: absolute;
       bottom: 6px;
@@ -416,6 +576,7 @@
       border-top: 10px solid #e88c20;
       filter: drop-shadow(0 2px 0 var(--outline));
     }
+
     .penguin-wing {
       position: absolute;
       width: 18px;
@@ -425,8 +586,17 @@
       bottom: 24px;
       transform-origin: top center;
     }
-    .penguin-wing.left { left: -6px; transform: rotate(-12deg); }
-    .penguin-wing.right { right: -6px; transform: rotate(12deg); }
+
+    .penguin-wing.left {
+      left: -6px;
+      transform: rotate(-12deg);
+    }
+
+    .penguin-wing.right {
+      right: -6px;
+      transform: rotate(12deg);
+    }
+
     .penguin-feet {
       position: absolute;
       bottom: -4px;
@@ -437,6 +607,7 @@
       display: flex;
       justify-content: space-between;
     }
+
     .penguin-feet::before,
     .penguin-feet::after {
       content: '';
@@ -452,6 +623,7 @@
       align-items: center;
       justify-content: center;
     }
+
     .penguin-heart {
       position: absolute;
       right: -18px;
@@ -459,9 +631,17 @@
       font-size: 1.4rem;
       animation: heartbeat 1s ease-in-out infinite;
     }
+
     @keyframes heartbeat {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.15); }
+
+      0%,
+      100% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.15);
+      }
     }
 
     /* Bow on second penguin - pixel */
@@ -474,6 +654,7 @@
       background: var(--pink);
       border: 2px solid var(--outline);
     }
+
     .penguin-bow::before {
       content: '';
       position: absolute;
@@ -496,6 +677,7 @@
       text-align: center;
       line-height: 1.8;
     }
+
     footer.animate-in {
       opacity: 0.8;
     }
@@ -512,29 +694,35 @@
       overflow: visible;
       isolation: isolate;
     }
+
     .confetti-piece {
       position: absolute;
       opacity: 1;
       will-change: transform, opacity;
     }
+
     .confetti-piece.confetti-paper {
       width: 14px;
       height: 14px;
       border-radius: 2px;
     }
+
     .confetti-piece.confetti-heart {
       font-size: 1.75rem;
       line-height: 1;
     }
+
     .confetti-piece.confetti-flower {
       font-size: 1.85rem;
       line-height: 1;
     }
+
     .confetti-piece.confetti-pixel {
       width: 36px;
       height: 36px;
       display: inline-block;
     }
+
     .confetti-piece.confetti-pixel img {
       width: 100%;
       height: 100%;
@@ -544,12 +732,36 @@
 
     /* Phone / narrow layout - letter above carousel, full width, no overlap */
     @media (max-width: 480px) {
-      body { padding: 0.5rem; }
-      h1 { font-size: 0.6rem; margin-bottom: 0.6rem; }
-      .scene { gap: 0.75rem; margin-top: 3.5rem; }
-      .music-box { padding: 0.6rem 0.9rem; gap: 0.35rem; margin-bottom: 0.35rem; }
-      .music-box-lid { margin-bottom: 0.15rem; }
-      .music-box-btn { width: 40px; height: 40px; font-size: 1rem; }
+      body {
+        padding: 0.5rem;
+      }
+
+      h1 {
+        font-size: 0.6rem;
+        margin-bottom: 0.6rem;
+      }
+
+      .scene {
+        gap: 0.75rem;
+        margin-top: 3.5rem;
+      }
+
+      .music-box {
+        padding: 0.6rem 0.9rem;
+        gap: 0.35rem;
+        margin-bottom: 0.35rem;
+      }
+
+      .music-box-lid {
+        margin-bottom: 0.15rem;
+      }
+
+      .music-box-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+      }
+
       .envelope-wrapper.opened .letter {
         position: fixed;
         top: max(0.5rem, env(safe-area-inset-top, 0px));
@@ -569,8 +781,15 @@
         scrollbar-width: none;
         -ms-overflow-style: none;
       }
-      .envelope-wrapper.opened .letter::-webkit-scrollbar { display: none; }
-      body.envelope-open .memories-wrap { z-index: 500; }
+
+      .envelope-wrapper.opened .letter::-webkit-scrollbar {
+        display: none;
+      }
+
+      body.envelope-open .memories-wrap {
+        z-index: 500;
+      }
+
       body.envelope-open .carousel-viewport {
         position: absolute;
         top: auto;
@@ -579,47 +798,144 @@
         transform: translate(-50%, 0);
         height: 96px;
       }
-      .envelope { width: 240px; height: 156px; }
+
+      .envelope {
+        width: 240px;
+        height: 156px;
+      }
+
       .envelope-flap {
         border-left-width: 120px;
         border-right-width: 120px;
         border-top-width: 86px;
       }
+
       .envelope-inner {
         border-left-width: 120px;
         border-right-width: 120px;
         border-bottom-width: 78px;
       }
+
       .letter {
         min-height: 140px;
         padding: 0.75rem 0.6rem;
         box-sizing: border-box;
       }
+
       .envelope-wrapper.opened .letter {
         padding: 0.75rem 0.6rem;
       }
-      .letter p { font-size: 0.4rem; line-height: 1.85; }
-      .letter .heart-line { font-size: 0.38rem; }
-      .letter .signature { font-size: 0.4rem; }
-      .tap-hint-open { font-size: 0.45rem; margin-top: 0.25rem; }
-      .tap-hint-close { font-size: 0.45rem; margin-top: 0.25rem; }
-      .penguins { gap: 0.75rem; margin-top: 0.25rem; }
-      .penguin { width: 64px; height: 82px; }
-      .penguin-body { width: 46px; height: 62px; clip-path: polygon(0 10px, 10px 0, 36px 0, 46px 10px, 46px 62px, 0 62px); }
-      .penguin-belly { width: 26px; height: 36px; clip-path: polygon(2px 0, 24px 0, 26px 36px, 0 36px); }
-      .penguin-face { width: 38px; height: 34px; }
-      .penguin-eye { width: 8px; height: 8px; top: 8px; }
-      .penguin-eye.left { left: 6px; }
-      .penguin-eye.right { right: 6px; }
-      .penguin-beak { border-left-width: 5px; border-right-width: 5px; border-top-width: 8px; }
-      .penguin-wing { width: 14px; height: 26px; bottom: 20px; }
-      .penguin-wing.left { left: -5px; }
-      .penguin-wing.right { right: -5px; }
-      .penguin-feet::before, .penguin-feet::after { width: 10px; height: 6px; }
-      .penguin-heart { font-size: 0.9rem; right: -12px; bottom: 4px; }
-      .penguin-bow { width: 14px; height: 10px; }
-      .penguin-bow::before { width: 5px; height: 5px; }
-      footer { font-size: 0.4rem; margin-top: 0.75rem; }
+
+      .letter p {
+        font-size: 0.4rem;
+        line-height: 1.85;
+      }
+
+      .letter .heart-line {
+        font-size: 0.38rem;
+      }
+
+      .letter .signature {
+        font-size: 0.4rem;
+      }
+
+      .tap-hint-open {
+        font-size: 0.45rem;
+        margin-top: 0.25rem;
+      }
+
+      .tap-hint-close {
+        font-size: 0.45rem;
+        margin-top: 0.25rem;
+      }
+
+      .penguins {
+        gap: 0.75rem;
+        margin-top: 0.25rem;
+      }
+
+      .penguin {
+        width: 64px;
+        height: 82px;
+      }
+
+      .penguin-body {
+        width: 46px;
+        height: 62px;
+        clip-path: polygon(0 10px, 10px 0, 36px 0, 46px 10px, 46px 62px, 0 62px);
+      }
+
+      .penguin-belly {
+        width: 26px;
+        height: 36px;
+        clip-path: polygon(2px 0, 24px 0, 26px 36px, 0 36px);
+      }
+
+      .penguin-face {
+        width: 38px;
+        height: 34px;
+      }
+
+      .penguin-eye {
+        width: 8px;
+        height: 8px;
+        top: 8px;
+      }
+
+      .penguin-eye.left {
+        left: 6px;
+      }
+
+      .penguin-eye.right {
+        right: 6px;
+      }
+
+      .penguin-beak {
+        border-left-width: 5px;
+        border-right-width: 5px;
+        border-top-width: 8px;
+      }
+
+      .penguin-wing {
+        width: 14px;
+        height: 26px;
+        bottom: 20px;
+      }
+
+      .penguin-wing.left {
+        left: -5px;
+      }
+
+      .penguin-wing.right {
+        right: -5px;
+      }
+
+      .penguin-feet::before,
+      .penguin-feet::after {
+        width: 10px;
+        height: 6px;
+      }
+
+      .penguin-heart {
+        font-size: 0.9rem;
+        right: -12px;
+        bottom: 4px;
+      }
+
+      .penguin-bow {
+        width: 14px;
+        height: 10px;
+      }
+
+      .penguin-bow::before {
+        width: 5px;
+        height: 5px;
+      }
+
+      footer {
+        font-size: 0.4rem;
+        margin-top: 0.75rem;
+      }
     }
 
     /* Moving carousel - visible when envelope open, scrolls left to right */
@@ -635,6 +951,7 @@
       visibility: hidden;
       transition: opacity 0.4s ease, visibility 0.4s ease;
     }
+
     body.envelope-open .memories-wrap {
       opacity: 1;
       visibility: visible;
@@ -649,10 +966,11 @@
       padding: 1rem 1.25rem;
       background: linear-gradient(180deg, var(--paper) 0%, #f5ebe0 100%);
       border: 3px solid var(--outline);
-      box-shadow: 5px 5px 0 var(--outline), inset 0 1px 0 rgba(255,255,255,0.5);
+      box-shadow: 5px 5px 0 var(--outline), inset 0 1px 0 rgba(255, 255, 255, 0.5);
       font-family: 'Press Start 2P', cursive;
       margin-bottom: 0.5rem;
     }
+
     .music-box-lid {
       width: 100%;
       height: 4px;
@@ -661,11 +979,13 @@
       margin-bottom: 0.25rem;
       border-radius: 1px;
     }
+
     .music-box-label {
       font-size: 0.35rem;
       color: var(--pink-dark);
       text-align: center;
     }
+
     .music-box-btn {
       width: 48px;
       height: 48px;
@@ -683,9 +1003,20 @@
       -webkit-tap-highlight-color: transparent;
       transition: transform 0.15s ease;
     }
-    .music-box-btn:hover { background: var(--pink-dark); transform: scale(1.05); }
-    .music-box-btn:active { transform: scale(0.98); }
-    .music-box-btn:focus { outline: 2px solid var(--outline); outline-offset: 2px; }
+
+    .music-box-btn:hover {
+      background: var(--pink-dark);
+      transform: scale(1.05);
+    }
+
+    .music-box-btn:active {
+      transform: scale(0.98);
+    }
+
+    .music-box-btn:focus {
+      outline: 2px solid var(--outline);
+      outline-offset: 2px;
+    }
 
     .carousel-viewport {
       position: absolute;
@@ -697,6 +1028,7 @@
       height: 96px;
       overflow: hidden;
     }
+
     .carousel-track {
       display: flex;
       flex-direction: row;
@@ -707,13 +1039,21 @@
       animation: carousel-scroll 50s linear infinite;
       will-change: transform;
     }
+
     body.envelope-open .memories-wrap .carousel-track {
       animation-play-state: running;
     }
+
     @keyframes carousel-scroll {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(calc(-100% / 3)); }
+      0% {
+        transform: translateX(0);
+      }
+
+      100% {
+        transform: translateX(calc(-100% / 3));
+      }
     }
+
     .carousel-item {
       position: relative;
       flex-shrink: 0;
@@ -722,8 +1062,9 @@
       border-radius: 10px;
       overflow: visible;
       border: 3px solid var(--outline);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     }
+
     .carousel-item img {
       width: 100%;
       height: 100%;
@@ -731,6 +1072,7 @@
       display: block;
       border-radius: 7px;
     }
+
     .carousel-item .pixel-pet {
       position: absolute;
       width: 26px;
@@ -738,6 +1080,7 @@
       z-index: 2;
       overflow: hidden;
     }
+
     .carousel-item .pixel-pet img {
       width: 100%;
       height: 100%;
@@ -746,12 +1089,33 @@
       image-rendering: pixelated;
       image-rendering: crisp-edges;
     }
-    .carousel-item .pixel-pet.corner-tl { top: -5px; left: -5px; }
-    .carousel-item .pixel-pet.corner-tr { top: -5px; right: -5px; left: auto; }
-    .carousel-item .pixel-pet.corner-bl { bottom: -5px; left: -5px; top: auto; }
-    .carousel-item .pixel-pet.corner-br { bottom: -5px; right: -5px; left: auto; top: auto; }
+
+    .carousel-item .pixel-pet.corner-tl {
+      top: -5px;
+      left: -5px;
+    }
+
+    .carousel-item .pixel-pet.corner-tr {
+      top: -5px;
+      right: -5px;
+      left: auto;
+    }
+
+    .carousel-item .pixel-pet.corner-bl {
+      bottom: -5px;
+      left: -5px;
+      top: auto;
+    }
+
+    .carousel-item .pixel-pet.corner-br {
+      bottom: -5px;
+      right: -5px;
+      left: auto;
+      top: auto;
+    }
   </style>
 </head>
+
 <body>
   <div class="sparkle"></div>
   <div class="sparkle"></div>
@@ -778,23 +1142,36 @@
         <div class="envelope-flap"></div>
         <div class="letter">
           <div class="letter-flowers" aria-hidden="true">
-            <span class="letter-flower"><img src="flowers/iq8u65d6nvev1415rb3j0sbfeu-f8507cc2a651bc1bfefaa8af8968a3b0.png" alt=""></span>
-            <span class="letter-flower"><img src="flowers/ac7ladmi02vths0bsgf9510nk8-fb150c79a8a0374595b91b265a1f874c.png" alt=""></span>
-            <span class="letter-flower"><img src="flowers/ac7ladmi02vths0bsgf9510nk8-fb150c79a8a0374595b91b265a1f874c.png" alt=""></span>
+            <span class="letter-flower"><img
+                src="flowers/iq8u65d6nvev1415rb3j0sbfeu-f8507cc2a651bc1bfefaa8af8968a3b0.png" alt=""></span>
+            <span class="letter-flower"><img
+                src="flowers/ac7ladmi02vths0bsgf9510nk8-fb150c79a8a0374595b91b265a1f874c.png" alt=""></span>
+            <span class="letter-flower"><img
+                src="flowers/ac7ladmi02vths0bsgf9510nk8-fb150c79a8a0374595b91b265a1f874c.png" alt=""></span>
             <span class="letter-flower"><img src="flowers/580sql68pvv9kiufngd7igm1vj.png" alt=""></span>
             <span class="letter-flower"><img src="flowers/580sql68pvv9kiufngd7igm1vj.png" alt=""></span>
-            <span class="letter-flower"><img src="flowers/iq8u65d6nvev1415rb3j0sbfeu-f8507cc2a651bc1bfefaa8af8968a3b0.png" alt=""></span>
+            <span class="letter-flower"><img
+                src="flowers/iq8u65d6nvev1415rb3j0sbfeu-f8507cc2a651bc1bfefaa8af8968a3b0.png" alt=""></span>
           </div>
           <p class="heart-line">❤️ 10 Years to Us ❤️</p>
-          <p>Dear Courtney Joyce Chiu,<p>
-          <p>From the moment we met in middle school, I had no idea that the girl I awkwardly asked to the dance would become the love of my life.</p>
-          <p>We’ve grown up together. We’ve seen each other at our most awkward, our most uncertain, and our most ambitious. We’ve changed, we’ve learned, we’ve faced challenges but somehow, through all of it, we kept choosing each other.</p>
-          <p>You’ve been there for every milestone. Every late night talk about our dreams. Every setback that felt overwhelming. Every laugh that hurt our stomachs. You grew up with me.</p>
+          <p>Dear Courtney Joyce Chiu,
+          <p>
+          <p>From the moment we met in middle school, I had no idea that the girl I awkwardly asked to the dance would
+            become the love of my life.</p>
+          <p>We’ve grown up together. We’ve seen each other at our most awkward, our most uncertain, and our most
+            ambitious. We’ve changed, we’ve learned, we’ve faced challenges but somehow, through all of it, we kept
+            choosing each other.</p>
+          <p>You’ve been there for every milestone. Every late night talk about our dreams. Every setback that felt
+            overwhelming. Every laugh that hurt our stomachs. You grew up with me.</p>
           <p>You are my comfort, my biggest supporter, and my best friend.</p>
-          <p>We started as kids who didn’t know what the future would look like. And now, standing here, I know exactly what I want my future to look like. I want it with you.</p>
-          <p>I want more inside jokes. More adventures. More random doing nothing days where we just hang out and laugh. I want to build a life with you, and keep choosing you every single day.</p>
+          <p>We started as kids who didn’t know what the future would look like. And now, standing here, I know exactly
+            what I want my future to look like. I want it with you.</p>
+          <p>I want more inside jokes. More adventures. More random doing nothing days where we just hang out and laugh.
+            I want to build a life with you, and keep choosing you every single day.</p>
           <p>So here we are not those middle school kids anymore, but two people who grew up loving each other.</p>
-          <p>Thank you for always seeing the best in me, and for always being there for me through it all. I love you more than words can say, and I can't wait to spend the rest of my life with you. Happy 10th Anniversary Baby, I wouldnt want to do it with anyone else.</p>
+          <p>Thank you for always seeing the best in me, and for always being there for me through it all. I love you
+            more than words can say, and I can't wait to spend the rest of my life with you. Happy 10th Anniversary
+            Baby, I wouldnt want to do it with anyone else.</p>
           <p class="signature">Forever Yours, Albert Huynh</p>
         </div>
       </div>
@@ -1110,4 +1487,5 @@
     });
   </script>
 </body>
+
 </html>
